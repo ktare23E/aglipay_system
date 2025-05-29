@@ -13,9 +13,9 @@
                         class="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         Sign in to your account
                     </h1>
-                    <form class="space-y-4 md:space-y-6" action="#">
-                        <InputContainer label="Email" :type="email" placeholder="Please enter your email"></InputContainer>
-                        <InputContainer label="Password" :type="password" placeholder="*****"></InputContainer>
+                    <form class="space-y-4 md:space-y-6" @submit.prevent="login">
+                        <InputContainer label="Email" type="email" v-model="email" placeholder="Please enter your email"></InputContainer>
+                        <InputContainer label="Password" type="password" v-model="password" placeholder="*****"></InputContainer>
 
                         
                         <button type="submit"
@@ -35,7 +35,15 @@
 <script setup>
     import { ref } from 'vue';
     import InputContainer from '../components/InputContainer.vue';
+    import { router } from '@inertiajs/vue3';
 
-    let email = ref('email')
-    let password = ref('password')
+    let email = ref('')
+    let password = ref('')
+
+    const login = () => {
+        router.post('login_user',{
+            email : email.value,
+            password : password.value
+        })
+    }
 </script>
